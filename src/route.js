@@ -18,22 +18,29 @@ router.post("/users/login",async(req,res) => {
         var yyyy = today.getFullYear();
         var time = today.toLocaleTimeString();
         today = mm + '/' + dd + '/' + yyyy;
-
+        var ip = req.headers['x-forwarded-for'] ||
+          req.connection.remoteAddress ||
+          null;
+          // console.log(123, req.headers['x-forwarded-for'], req.socket.remoteAddress, req.connection.remoteAddress)
         if(i==-1) {
           
-          console.log("Login Attempt failed by " + req.ip + " on " + today +" at " + time + " with username " + username + "\n");
+          console.log("Login Attempt failed by " + ip + " on " + today +" at " + time + " with username " + username + "\n");
           res.status(404).send({})
+          return;
         }
 
         if(password == passwords[i]) {
-          console.log("Login Attempt passed by " + req.ip + " on " + today +" at " + time + " with username " + username + "\n");
+          console.log("Login Attempt passed by " + ip + " on " + today +" at " + time + " with username " + username + "\n");
           res.status(201).send({})
+          return;
         } else {
-          console.log("Login Attempt failed by " + req.ip + " on " + today +" at " + time + " with username " + username + "\n");
+          console.log("Login Attempt failed by " + ip + " on " + today +" at " + time + " with username " + username + "\n");
           res.status(404).send({})
+          return;
         }
     } catch (e) {
         res.status(e.message ? 401 : 500).send(e.message)
+        return;
     }
 })
 
