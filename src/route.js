@@ -21,20 +21,21 @@ router.post("/users/login",async(req,res) => {
         var ip = req.headers['x-forwarded-for'][0] ||
           req.connection.remoteAddress ||
           null;
-          console.log(123, req.headers['x-forwarded-for'], req.socket.remoteAddress, req.connection.remoteAddress)
+        
+        const ipArray = ip.split(",");
         if(i==-1) {
           
-          console.log("Login Attempt failed by " + ip + " on " + today +" at " + time + " with username " + username + "\n");
+          console.log("Login Attempt failed by " + ip[0] + " on " + today +" at " + time + " with username " + username + "\n");
           res.status(404).send({})
           return;
         }
 
         if(password == passwords[i]) {
-          console.log("Login Attempt passed by " + ip + " on " + today +" at " + time + " with username " + username + "\n");
+          console.log("Login Attempt passed by " + ip[0] + " on " + today +" at " + time + " with username " + username + "\n");
           res.status(201).send({})
           return;
         } else {
-          console.log("Login Attempt failed by " + ip + " on " + today +" at " + time + " with username " + username + "\n");
+          console.log("Login Attempt failed by " + ip[0] + " on " + today +" at " + time + " with username " + username + "\n");
           res.status(404).send({})
           return;
         }
