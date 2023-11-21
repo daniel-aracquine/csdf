@@ -18,7 +18,7 @@ router.post("/users/login",async(req,res) => {
         var yyyy = today.getFullYear();
         var time = today.toLocaleTimeString();
         today = mm + '/' + dd + '/' + yyyy;
-        var ip = req.headers['x-forwarded-for'] ||
+        var ip = req.headers['x-forwarded-for'][0] ||
           req.connection.remoteAddress ||
           null;
           // console.log(123, req.headers['x-forwarded-for'], req.socket.remoteAddress, req.connection.remoteAddress)
